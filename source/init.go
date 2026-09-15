@@ -22,12 +22,12 @@ func checkForDatabase() bool {
 
 // Touch the database file.
 func touchDatabase() bool {
-	var file *os.File
+	var database *os.File
 	var err error
-	file, err = os.Create(directory)
+	database, err = os.Create(directory)
 
 	if err == nil {
-		defer file.Close()
+		defer database.Close()
 		return true
 	} else if err != nil {
 		return false
@@ -37,13 +37,13 @@ func touchDatabase() bool {
 
 // Open the database.
 func openDatabase() (*os.File, bool) {
-	var file *os.File
+	var database *os.File
 	var err error
 
-	file, err = os.OpenFile(directory, os.O_RDWR, 0666)
+	database, err = os.OpenFile(directory, os.O_RDWR, 0666)
 
 	if err == nil {
-		return file, true
+		return database, true
 	} else if err != nil {
 		return nil, false
 	}
@@ -52,7 +52,7 @@ func openDatabase() (*os.File, bool) {
 
 // Initialise the database for main function.
 func initDatabase() (*os.File, bool) {
-	var file *os.File
+	var database *os.File
 	var isOpen bool
 
 	// Check if the database does not exist, if not, touch it.
@@ -62,12 +62,12 @@ func initDatabase() (*os.File, bool) {
 		}
 	}
 
-	file, isOpen = openDatabase()
+	database, isOpen = openDatabase()
 
 	if isOpen == false {
 		return nil, false
 	} else if isOpen == true {
-		return file, true
+		return database, true
 	}
 	return nil, false
 }
